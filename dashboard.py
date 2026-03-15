@@ -8,9 +8,8 @@ from analysis import (
     bootstrap, bayesian_analysis, calculate_mde
 )
 
-# ─────────────────────────────────────────
 # PAGE CONFIG
-# ─────────────────────────────────────────
+
 
 st.set_page_config(
     page_title="Cookie Cats A/B Test",
@@ -18,9 +17,8 @@ st.set_page_config(
     layout="wide"
 )
 
-# ─────────────────────────────────────────
 # LOAD DATA & RUN ANALYSIS
-# ─────────────────────────────────────────
+
 
 @st.cache_data
 def run_analysis():
@@ -39,9 +37,9 @@ def run_analysis():
 df, r1, r7, rounds, boot1, boot7, bayes1, bayes7, mde1, mde7 = run_analysis()
 
 
-# ─────────────────────────────────────────
+
 # HEADER
-# ─────────────────────────────────────────
+
 
 st.title("🎮 Cookie Cats — A/B Test Analysis")
 st.markdown(
@@ -52,9 +50,7 @@ st.markdown(
 st.markdown("---")
 
 
-# ─────────────────────────────────────────
 # ROW 1 — TOP METRICS
-# ─────────────────────────────────────────
 
 col1, col2, col3, col4 = st.columns(4)
 
@@ -74,11 +70,10 @@ with col4:
 st.markdown("---")
 
 
-# ─────────────────────────────────────────
-# ROW 2 — RETENTION BAR CHARTS
-# ─────────────────────────────────────────
 
-st.subheader("📊 Retention Rate Comparison")
+# ROW 2 — RETENTION BAR CHART :
+
+st.subheader(" Retention Rate Comparison")
 col1, col2 = st.columns(2)
 
 def retention_bar(result, title):
@@ -114,9 +109,7 @@ with col2:
     st.plotly_chart(retention_bar(r7, "7-Day Retention"), use_container_width=True)
 
 
-# ─────────────────────────────────────────
 # ROW 3 — STATISTICAL SIGNIFICANCE
-# ─────────────────────────────────────────
 
 st.markdown("---")
 st.subheader("🔬 Statistical Significance")
@@ -150,9 +143,9 @@ with col2:
     significance_card(r7, "7-Day Retention — Z-Test")
 
 
-# ─────────────────────────────────────────
+
 # ROW 4 — BOOTSTRAP DISTRIBUTIONS
-# ─────────────────────────────────────────
+
 
 st.markdown("---")
 st.subheader("🔄 Bootstrap Simulation (1,000 iterations)")
@@ -195,9 +188,9 @@ with col2:
                     use_container_width=True)
 
 
-# ─────────────────────────────────────────
+
 # ROW 5 — BAYESIAN POSTERIORS
-# ─────────────────────────────────────────
+
 
 st.markdown("---")
 st.subheader("🎲 Bayesian Posterior Distributions")
@@ -238,9 +231,9 @@ with col2:
                     use_container_width=True)
 
 
-# ─────────────────────────────────────────
+
 # ROW 6 — ROUNDS DISTRIBUTION
-# ─────────────────────────────────────────
+
 
 st.markdown("---")
 st.subheader("🎯 Rounds Played Distribution")
@@ -268,9 +261,7 @@ fig.update_layout(
 st.plotly_chart(fig, use_container_width=True)
 
 
-# ─────────────────────────────────────────
-# ROW 7 — MDE & FINAL DECISION
-# ─────────────────────────────────────────
+# ROW 7 — MDE & FINAL DECISIO
 
 st.markdown("---")
 col1, col2 = st.columns(2)
