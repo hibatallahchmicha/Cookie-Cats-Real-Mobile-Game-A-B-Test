@@ -4,14 +4,12 @@ from scipy import stats
 import warnings
 warnings.filterwarnings("ignore")
 
-# ─────────────────────────────────────────
-# LOAD & CLEAN
-# ─────────────────────────────────────────
+# load and clean 
 
 def load_and_clean():
     df = pd.read_csv("data/cookie_cats.csv")
 
-    print("🧹 Cleaning data...")
+    print(" Cleaning data...")
     original = len(df)
 
     # Remove users who never played
@@ -27,9 +25,8 @@ def load_and_clean():
     return df
 
 
-# ─────────────────────────────────────────
+
 # FREQUENTIST TEST — Z-TEST FOR PROPORTIONS
-# ─────────────────────────────────────────
 
 def z_test(df, metric):
     """
@@ -68,9 +65,7 @@ def z_test(df, metric):
     }
 
 
-# ─────────────────────────────────────────
 # T-TEST — ROUNDS PLAYED
-# ─────────────────────────────────────────
 
 def t_test_rounds(df):
     """
@@ -94,17 +89,15 @@ def t_test_rounds(df):
         "winner":      "gate_30" if diff > 0 else "gate_40"
     }
 
-
-# ─────────────────────────────────────────
 # BOOTSTRAP SIMULATION
-# ─────────────────────────────────────────
+
 
 def bootstrap(df, metric, n_iterations=1000):
     """
     Resample the data 1000 times to estimate how stable
     our results are. More robust than a single test.
     """
-    print(f"🔄 Running bootstrap simulation ({n_iterations} iterations)...")
+    print(f" Running bootstrap simulation ({n_iterations} iterations)...")
 
     control   = df[df["version"] == "gate_30"][metric].values
     treatment = df[df["version"] == "gate_40"][metric].values
@@ -128,9 +121,9 @@ def bootstrap(df, metric, n_iterations=1000):
     }
 
 
-# ─────────────────────────────────────────
+
 # BAYESIAN ANALYSIS
-# ─────────────────────────────────────────
+
 
 def bayesian_analysis(df, metric):
     """
@@ -163,10 +156,8 @@ def bayesian_analysis(df, metric):
         "samples_treatment":       samples_t.tolist()[:5000],
     }
 
-
-# ─────────────────────────────────────────
 # MINIMUM DETECTABLE EFFECT
-# ─────────────────────────────────────────
+
 
 def calculate_mde(df, metric):
     """
@@ -189,21 +180,18 @@ def calculate_mde(df, metric):
         "mde_relative": round(mde / p * 100, 2)
     }
 
-
-# ─────────────────────────────────────────
-# MAIN — RUN ALL TESTS
-# ─────────────────────────────────────────
+# MAIN — RUN ALL TEST :
 
 if __name__ == "__main__":
     df = load_and_clean()
 
     print("=" * 55)
-    print("   📊 FREQUENTIST TESTS")
+    print("    FREQUENTIST TESTS")
     print("=" * 55)
 
     for metric in ["retention_1", "retention_7"]:
         result = z_test(df, metric)
-        sig    = "✅ SIGNIFICANT" if result["significant"] else "❌ NOT significant"
+        sig    = " SIGNIFICANT" if result["significant"] else " NOT significant"
         print(f"\n  {metric.upper()}")
         print(f"  gate_30 : {result['gate_30']}%")
         print(f"  gate_40 : {result['gate_40']}%")
@@ -218,10 +206,10 @@ if __name__ == "__main__":
     print(f"  gate_30 : {rounds['gate_30']}")
     print(f"  gate_40 : {rounds['gate_40']}")
     print(f"  p-value : {rounds['p_value']}")
-    print(f"  Result  : {'✅ SIGNIFICANT' if rounds['significant'] else '❌ NOT significant'}")
+    print(f"  Result  : {' SIGNIFICANT' if rounds['significant'] else ' NOT significant'}")
 
     print("\n" + "=" * 55)
-    print("   🔄 BOOTSTRAP SIMULATION")
+    print("    BOOTSTRAP SIMULATION")
     print("=" * 55)
 
     for metric in ["retention_1", "retention_7"]:
@@ -232,7 +220,7 @@ if __name__ == "__main__":
         print(f"  P(gate_30 wins)    : {boot['prob_control_wins']}%")
 
     print("\n" + "=" * 55)
-    print("   🎲 BAYESIAN ANALYSIS")
+    print("  BAYESIAN ANALYSIS")
     print("=" * 55)
 
     for metric in ["retention_1", "retention_7"]:
@@ -242,7 +230,7 @@ if __name__ == "__main__":
         print(f"  P(gate_40 better) : {bayes['prob_gate40_better']}%")
 
     print("\n" + "=" * 55)
-    print("   📏 MINIMUM DETECTABLE EFFECT")
+    print("    MINIMUM DETECTABLE EFFECT")
     print("=" * 55)
 
     for metric in ["retention_1", "retention_7"]:
