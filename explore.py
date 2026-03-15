@@ -5,7 +5,7 @@ import numpy as np
 # LOAD DATA
 # ─────────────────────────────────────────
 
-df = pd.read_csv("cookie_cats.csv")
+df = pd.read_csv("data/cookie_cats.csv")
 
 print("=" * 50)
 print("   🎮 COOKIE CATS — DATA EXPLORATION")

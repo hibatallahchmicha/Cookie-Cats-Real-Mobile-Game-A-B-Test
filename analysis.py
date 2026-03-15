@@ -9,7 +9,7 @@ warnings.filterwarnings("ignore")
 # ─────────────────────────────────────────
 
 def load_and_clean():
-    df = pd.read_csv("cookie_cats.csv")
+    df = pd.read_csv("data/cookie_cats.csv")
 
     print("🧹 Cleaning data...")
     original = len(df)
